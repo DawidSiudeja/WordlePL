@@ -1,5 +1,6 @@
 package com.example.zgadnijslowo.presentation.screens.onboarding
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +20,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +60,14 @@ fun OnBoardingScreen(
 
     val pagerState = rememberPagerState()
 
+    val onBoardingUserInfo = viewModel.getAllUserInfoData().collectAsState(initial = UserInfo(id=0)).value
 
+    LaunchedEffect(onBoardingUserInfo) {
+        if (onBoardingUserInfo.onBoardingIsFinished) {
+            navController.popBackStack()
+            navController.navigate(Screen.Home.route)
+        }
+    }
 
 
     Column(
