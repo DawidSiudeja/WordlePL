@@ -22,4 +22,7 @@ interface UserInfoDao {
     @Query("UPDATE user_info_table SET gamesWin = gamesWin + 1")
     suspend fun increaseWinsPlayed()
 
+    @Query("UPDATE user_info_table SET onBoardingIsFinished = 1")
+    suspend fun setOnBoardingToCompleted()
+
 }

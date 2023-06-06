@@ -88,7 +88,7 @@ fun OnBoardingScreen(
             modifier = Modifier.weight(1f),
             pagerState = pagerState
         ) {
-            viewModel.setUserInfoDatabaseAndBoardingCompleted()
+            viewModel.setOnBoardingToCompleted()
             navController.popBackStack()
             navController.navigate(Screen.Home.route)
         }

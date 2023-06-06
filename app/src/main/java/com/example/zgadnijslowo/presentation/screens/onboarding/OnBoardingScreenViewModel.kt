@@ -20,36 +20,25 @@ import javax.inject.Inject
 class OnBoardingScreenViewModel @Inject constructor(
     private val repository: Repository,
     private val appDatabase: AppDatabase,
-    //private val navController: NavHostController
 ): ViewModel() {
 
     private val userInfoDao = appDatabase.userInfoDao()
 
-
     init {
-        viewModelScope.launch {
-            val userInfoData = userInfoDao.getAllUserInfo().first()
-            if (userInfoData.onBoardingIsFinished) {
-                //navController.navigate(Screen.Home.route)
-            }
-        }
-    }
 
+        val userInfo = UserInfo(id = 0)
+        viewModelScope.launch {
+            userInfoDao.addUserInfo(userInfo = userInfo)
+        }
+
+    }
     fun getAllUserInfoData(): Flow<UserInfo> {
         return userInfoDao.getAllUserInfo()
     }
 
-
-
-    fun setUserInfoDatabaseAndBoardingCompleted() {
-
-        val userInfo = UserInfo(
-            id = 0,
-            onBoardingIsFinished = true,
-        )
-
+    fun setOnBoardingToCompleted() {
         viewModelScope.launch {
-            userInfoDao.addUserInfo(userInfo = userInfo)
+            userInfoDao.setOnBoardingToCompleted()
         }
     }
 
