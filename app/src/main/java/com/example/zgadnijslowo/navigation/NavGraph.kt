@@ -20,13 +20,13 @@ fun SetupNavigation() {
         composable(
             route = Screen.Home.route
         ) {
-            HomeScreen()
+            HomeScreen(navController = navController)
         }
 
         composable(
             route = Screen.Game.route
         ) {
-            GameScreen()
+            GameScreen(navController = navController)
         }
 
         composable(

@@ -1,10 +1,8 @@
 package com.example.zgadnijslowo.presentation.screens.onboarding
 
-import android.graphics.fonts.FontStyle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,15 +19,16 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.zgadnijslowo.domain.model.OnBoardingPage
+import com.example.zgadnijslowo.domain.model.UserInfo
 import com.example.zgadnijslowo.navigation.Screen
 import com.example.zgadnijslowo.ui.theme.BODY_PADDING
 import com.example.zgadnijslowo.ui.theme.activeIndicatorColor
@@ -59,6 +58,9 @@ fun OnBoardingScreen(
 
     val pagerState = rememberPagerState()
 
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,6 +79,7 @@ fun OnBoardingScreen(
             modifier = Modifier.weight(1f),
             pagerState = pagerState
         ) {
+            viewModel.setUserInfoDatabaseAndBoardingCompleted()
             navController.popBackStack()
             navController.navigate(Screen.Home.route)
         }
