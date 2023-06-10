@@ -1,6 +1,7 @@
 package com.example.zgadnijslowo.ui.theme
 
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -20,23 +21,31 @@ val SecondaryColor = Color(0XFFFFCD4B)
 val lightWhiteColor = Color(0XFFF8F8F8)
 val lightBeige = Color(0XFFFFF3D4)
 val lightGrey = Color(0XFF333333)
+val greenColor = Color(0XFF00BE13)
+
+val lightRed = Color(0XFFFF4F4F)
+val darkRed = Color(0XFFFF1F1F)
 
 val Colors.backgroundColor
     @Composable
-    get() = if(isLight) BackgroundLight else BackgroundDark
+    get() = if(isSystemInDarkTheme()) BackgroundDark else BackgroundLight
 
 val Colors.activeIndicatorColor
     @Composable
-    get() = if(isLight) Color.Black else SecondaryColor
+    get() = if(isSystemInDarkTheme()) SecondaryColor else Color.Black
 
 val Colors.textColor
     @Composable
-    get() = if(isLight) Color.Black else SecondaryColor
+    get() = if(isSystemInDarkTheme()) lightWhiteColor else Color.Black
 
 val Colors.imageBackgroundOnBoarding
     @Composable
-    get() = if(isLight) lightBeige else lightGrey
+    get() = if(isSystemInDarkTheme()) lightGrey else lightBeige
 
 val Colors.buttonColor
     @Composable
-    get() = if(isLight) SecondaryColor else lightGrey
+    get() = if(isSystemInDarkTheme()) lightGrey else SecondaryColor
+
+val Colors.loseWidget
+    @Composable
+    get() = if(isSystemInDarkTheme()) darkRed else lightRed
