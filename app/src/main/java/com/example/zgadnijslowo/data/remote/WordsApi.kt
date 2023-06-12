@@ -1,6 +1,7 @@
 package com.example.zgadnijslowo.data.remote
 
 import com.example.zgadnijslowo.domain.model.ApiResponse
+import com.example.zgadnijslowo.domain.model.Word
 import retrofit2.http.GET
 import retrofit2.http.Query
 

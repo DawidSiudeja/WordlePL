@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.zgadnijslowo.presentation.screens.game.GameScreen
 import com.example.zgadnijslowo.presentation.screens.home.HomeScreen
 import com.example.zgadnijslowo.presentation.screens.onboarding.OnBoardingScreen
+import com.example.zgadnijslowo.presentation.screens.wordlist.WordList
 
 @Composable
 fun SetupNavigation() {
@@ -33,6 +34,12 @@ fun SetupNavigation() {
             route = Screen.OnBoarding.route
         ) {
             OnBoardingScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.WordsList.route
+        ) {
+            WordList(navController = navController)
         }
     }
 }

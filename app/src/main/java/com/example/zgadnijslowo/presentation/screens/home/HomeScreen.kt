@@ -1,5 +1,6 @@
 package com.example.zgadnijslowo.presentation.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +37,7 @@ import com.example.zgadnijslowo.domain.model.UserInfo
 import com.example.zgadnijslowo.navigation.Screen
 import com.example.zgadnijslowo.presentation.screens.components.ImageHeader
 import com.example.zgadnijslowo.presentation.screens.onboarding.OnBoardingScreenViewModel
+import com.example.zgadnijslowo.presentation.screens.wordlist.WordList
 import com.example.zgadnijslowo.ui.theme.BODY_PADDING
 import com.example.zgadnijslowo.ui.theme.backgroundColor
 import com.example.zgadnijslowo.ui.theme.buttonColor
@@ -63,7 +65,7 @@ fun HomeScreen(
         Column {
             StartGameAndWordListBtn(
                 startGame = { navController.navigate(Screen.Game.route) },
-                wordList = {}
+                wordList = { navController.navigate(Screen.WordsList.route) }
             )
         }
     }
