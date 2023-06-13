@@ -3,11 +3,8 @@ package com.example.zgadnijslowo.data.repository
 import android.util.Log
 import com.example.zgadnijslowo.data.local.AppDatabase
 import com.example.zgadnijslowo.data.remote.WordsApi
-import com.example.zgadnijslowo.domain.model.Word
 import com.example.zgadnijslowo.domain.repository.RemoteDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
 class RemoteDataSourceImpl(
@@ -23,11 +20,9 @@ class RemoteDataSourceImpl(
             wordsApi.getAllWords().words
         }
 
-        Log.d("getAllWords", "Received words: $response")
+        wordsDao.deleteAllWords()
 
         wordsDao.insertWords(response)
-
-        Log.d("getAllWords", "Inserted words into database")
 
     }
 }

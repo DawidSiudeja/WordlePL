@@ -22,9 +22,7 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             useCases.getAllWordsUseCase()
         }
-
     }
-
 
     private val userInfoDao = appDatabase.userInfoDao()
 

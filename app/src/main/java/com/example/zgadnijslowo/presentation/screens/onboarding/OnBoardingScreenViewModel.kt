@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingScreenViewModel @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
     private val appDatabase: AppDatabase,
 ): ViewModel() {
 

@@ -46,6 +46,7 @@ val Colors.buttonColor
     @Composable
     get() = if(isSystemInDarkTheme()) lightGrey else SecondaryColor
 
+
 val Colors.loseWidget
     @Composable
     get() = if(isSystemInDarkTheme()) darkRed else lightRed

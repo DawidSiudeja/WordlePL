@@ -1,6 +1,7 @@
 package com.example.zgadnijslowo.di
 
 import GetAllWordsUseCase
+import com.example.zgadnijslowo.constants.Constants.BASE_API_URL
 import com.example.zgadnijslowo.data.local.AppDatabase
 import com.example.zgadnijslowo.data.local.dao.WordsDao
 import com.example.zgadnijslowo.data.remote.WordsApi
@@ -37,7 +38,7 @@ object AppModule {
     @Singleton
     fun provideRetrofitInstance(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080")
+            .baseUrl(BASE_API_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
