@@ -1,6 +1,7 @@
 package com.example.zgadnijslowo.presentation.screens.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,10 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.zgadnijslowo.R
+import com.example.zgadnijslowo.navigation.Screen
 
 @Composable
-fun ImageHeader() {
+fun ImageHeader(
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -21,6 +26,8 @@ fun ImageHeader() {
         contentAlignment = Alignment.Center
     ) {
         Image(
+            modifier = Modifier
+                .clickable { navController.navigate(Screen.Home.route) },
             painter = (if(isSystemInDarkTheme()) {
                 painterResource(id = R.drawable.logo)
             } else {

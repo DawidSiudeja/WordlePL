@@ -41,7 +41,7 @@ fun WordList(
             .background(MaterialTheme.colors.backgroundColor)
             .padding(horizontal = BODY_PADDING)
     ) {
-        ImageHeader()
+        ImageHeader(navController)
         Text(
             modifier = Modifier
                 .padding(bottom = 16.dp),
@@ -59,7 +59,6 @@ fun WordList(
             }
         }
     }
-
 }
 
 

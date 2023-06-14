@@ -1,6 +1,7 @@
 package com.example.zgadnijslowo.presentation.screens.home
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.zgadnijslowo.data.local.AppDatabase
@@ -10,6 +11,7 @@ import com.example.zgadnijslowo.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,9 +21,16 @@ class HomeScreenViewModel @Inject constructor(
 ): ViewModel() {
 
     init {
-        viewModelScope.launch {
-            useCases.getAllWordsUseCase()
+        try {
+            viewModelScope.launch {
+                useCases.getAllWordsUseCase()
+            }
+        } catch (e: IOException) {
+            Log.d("ERROR","Network connection issue: ${e.message}")
+        } catch (e: Exception) {
+            Log.d("ERROR","Unknown error: ${e.message}")
         }
+
     }
 
     private val userInfoDao = appDatabase.userInfoDao()

@@ -59,7 +59,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            ImageHeader()
+            ImageHeader(navController)
             UserStats(userInfo = userInfo)
         }
         Column {
