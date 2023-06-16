@@ -72,7 +72,12 @@ fun SingleWord(
             .fillMaxWidth()
             .padding(vertical = 10.dp, horizontal = 5.dp)
     ) {
-        Text(text = word.id.toString() + ": "  + word.name.capitalize())
+        val numbersOfWords = word.id + 1
+
+        Text(
+            text = numbersOfWords.toString() + ": "  + word.name.capitalize(),
+            color = MaterialTheme.colors.textColor
+        )
 
     }
     Box(

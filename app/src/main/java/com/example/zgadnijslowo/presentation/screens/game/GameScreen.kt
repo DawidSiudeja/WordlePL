@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,9 +29,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.zgadnijslowo.presentation.screens.components.ImageHeader
 import com.example.zgadnijslowo.ui.theme.BODY_PADDING
+import com.example.zgadnijslowo.ui.theme.BackgroundDark
+import com.example.zgadnijslowo.ui.theme.SecondaryColor
 import com.example.zgadnijslowo.ui.theme.backgroundColor
+import com.example.zgadnijslowo.ui.theme.greenColor
 import com.example.zgadnijslowo.ui.theme.imageBackgroundOnBoarding
+import com.example.zgadnijslowo.ui.theme.lightBeige
+import com.example.zgadnijslowo.ui.theme.lightGreyGameColor
+import com.example.zgadnijslowo.ui.theme.lightRed
 import com.example.zgadnijslowo.ui.theme.textColor
+import com.example.zgadnijslowo.ui.theme.yellowGameColor
 
 @Composable
 fun GameScreen(
@@ -41,7 +49,7 @@ fun GameScreen(
     var entryWords = remember { mutableStateListOf<String>() }
     var wordCount = 0
     var word: String
-
+    var boxColor = remember { mutableStateListOf<Color>() }
 
 
 
@@ -55,7 +63,7 @@ fun GameScreen(
     ) {
         ImageHeader(navController)
 
-        MainGamePanelRow(letters = letters)
+        MainGamePanelRow(letters = letters, boxColors = boxColor)
 
         KeyboardWidget(
             onLetterClick = { letter ->
@@ -131,7 +139,8 @@ fun GameScreen(
                     }
                     //
                     entryWords.add(word)
-                    viewModel.checkingEntryWord(word)
+                    var result = viewModel.checkingEntryWord(word)
+                    changingBoxColors(result = result, boxColor = boxColor)
                 }
             }
         )
@@ -140,11 +149,12 @@ fun GameScreen(
 }
 
 @Composable
-fun MainGamePanelRow(letters: List<String>) {
+fun MainGamePanelRow(letters: List<String>, boxColors: List<Color>) {
     Column(
         modifier = Modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
         repeat(6) { rowIndex ->
             Row(
                 modifier = Modifier
@@ -155,12 +165,13 @@ fun MainGamePanelRow(letters: List<String>) {
                 repeat(5) { columnIndex ->
                     val index = rowIndex * 5 + columnIndex
                     val letter = letters.getOrNull(index) ?: ""
+                    val boxColor = boxColors.getOrNull(index) ?: MaterialTheme.colors.imageBackgroundOnBoarding
                     Box(
                         modifier = Modifier
                             .width(60.dp)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(5.dp))
-                            .background(MaterialTheme.colors.imageBackgroundOnBoarding),
+                            .background(boxColor),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
@@ -176,5 +187,21 @@ fun MainGamePanelRow(letters: List<String>) {
     }
 }
 
+fun changingBoxColors(
+    result: List<String>,
+    boxColor: MutableList<Color>
+) {
+    // result = [bad, bad, good, great, bad]
 
-
+    for((i, x) in result.withIndex()) {
+        if(x == "bad") {
+            boxColor.add(lightGreyGameColor)
+        }
+        if(x == "good") {
+            boxColor.add(yellowGameColor)
+        }
+        if(x == "great") {
+            boxColor.add(greenColor)
+        }
+    }
+}

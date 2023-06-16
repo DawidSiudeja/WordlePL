@@ -18,6 +18,10 @@ val Pink40 = Color(0xFF7D5260)
 val BackgroundLight = Color(0xFFFFE49D)
 val BackgroundDark = Color(0xFF171717)
 val SecondaryColor = Color(0XFFFFCD4B)
+
+val yellowGameColor = Color(0XFFFCC025)
+val lightGreyGameColor = Color(0XFF6F6F6F)
+
 val lightWhiteColor = Color(0XFFF8F8F8)
 val lightBeige = Color(0XFFFFF3D4)
 val lightGrey = Color(0XFF333333)

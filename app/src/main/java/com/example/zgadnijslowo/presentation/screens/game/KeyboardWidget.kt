@@ -1,5 +1,6 @@
 package com.example.zgadnijslowo.presentation.screens.game
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.zgadnijslowo.R
+import com.example.zgadnijslowo.ui.theme.KEYBOARD_ELEMENT_BTN_WIDTH
 import com.example.zgadnijslowo.ui.theme.KEYBOARD_ELEMENT_HEIGHT
 import com.example.zgadnijslowo.ui.theme.KEYBOARD_ELEMENT_RADIUS
 import com.example.zgadnijslowo.ui.theme.KEYBOARD_ELEMENT_WIDTH
@@ -44,6 +48,21 @@ fun KeyboardWidget(
             "ź","ż"
         )
 
+    val qwertyAlphabet: List<String> =
+        listOf(
+            "q","w","e","r","t","y","u","i","o","p",
+            "a","s","d","f","g","h","j","k","l",
+            "z","x","c","v","b","n","m",
+            "ą","ć","ę","ł","ń","ó","ś","ź","ż"
+        )
+
+    qwertyKeyboard(
+        qwertyAlphabet = qwertyAlphabet,
+        onLetterClick = onLetterClick,
+        onUndoClick = onUndoClick,
+        onEnterClick = onEnterClick
+    )
+/*
     repeat(3) { rowIndex ->
         Row(
             modifier = Modifier
@@ -53,10 +72,13 @@ fun KeyboardWidget(
         ) {
             repeat(10) { columnIndex ->
                 val letterIndex = rowIndex * 10 + columnIndex
+
                 KeyboardElement(
-                    letter = polishAlphabet[letterIndex],
+                    letter = qwertyAlphabet[letterIndex],
                     onLetterClick = onLetterClick,
                 )
+
+
             }
         }
     }
@@ -72,6 +94,8 @@ fun KeyboardWidget(
             onEnterClick = onEnterClick
         )
     }
+
+ */
 }
 
 @Composable
@@ -83,6 +107,7 @@ fun KeyboardElement(
         modifier = Modifier
             .width(KEYBOARD_ELEMENT_WIDTH)
             .height(KEYBOARD_ELEMENT_HEIGHT)
+            .padding(end = 5.dp)
             .clip(RoundedCornerShape(KEYBOARD_ELEMENT_RADIUS))
             .background(MaterialTheme.colors.imageBackgroundOnBoarding)
             .clickable {
@@ -177,4 +202,112 @@ fun SpecialKeyboardElement(
             fontWeight = FontWeight.Bold
         )
     }
+}
+
+
+@Composable
+fun qwertyKeyboard(
+    qwertyAlphabet: List<String>,
+    onLetterClick: (String) -> Unit,
+    onUndoClick: () -> Unit,
+    onEnterClick: () -> Unit,
+) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(10) { letterIndex ->
+                KeyboardElement(
+                    letter = qwertyAlphabet[letterIndex],
+                    onLetterClick = onLetterClick,
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(9) { letterIndex ->
+                val letterIndex = letterIndex + 10
+
+                KeyboardElement(
+                    letter = qwertyAlphabet[letterIndex],
+                    onLetterClick = onLetterClick,
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(end = 5.dp)
+                    .height(KEYBOARD_ELEMENT_HEIGHT)
+                    .width(KEYBOARD_ELEMENT_BTN_WIDTH)
+                    .clip(RoundedCornerShape(KEYBOARD_ELEMENT_RADIUS))
+                    .background(MaterialTheme.colors.loseWidget)
+                    .clickable {
+                        onUndoClick()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_undo),
+                    contentDescription = "UNDO BUTTON"
+                )
+            }
+            repeat(7) { letterIndex ->
+                val letterIndex = letterIndex + 19
+
+                KeyboardElement(
+                    letter = qwertyAlphabet[letterIndex],
+                    onLetterClick = onLetterClick,
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .height(KEYBOARD_ELEMENT_HEIGHT)
+                    .width(KEYBOARD_ELEMENT_BTN_WIDTH)
+                    .clip(RoundedCornerShape(KEYBOARD_ELEMENT_RADIUS))
+                    .background(greenColor)
+                    .clickable {
+                        onEnterClick()
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_enter),
+                    contentDescription = "UNDO BUTTON"
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(9) { letterIndex ->
+
+                val letterIndex = letterIndex + 26
+
+                KeyboardElement(
+                    letter = qwertyAlphabet[letterIndex],
+                    onLetterClick = onLetterClick,
+                )
+            }
+        }
+    }
+
 }
