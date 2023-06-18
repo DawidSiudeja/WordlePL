@@ -9,6 +9,7 @@ import com.example.zgadnijslowo.data.repository.RemoteDataSourceImpl
 import com.example.zgadnijslowo.data.repository.Repository
 import com.example.zgadnijslowo.domain.repository.RemoteDataSource
 import com.example.zgadnijslowo.domain.use_cases.UseCases
+import com.example.zgadnijslowo.domain.use_cases.get_random_word.GetRandomWordFromApi
 import com.google.gson.Gson
 import retrofit2.converter.gson.GsonConverterFactory
 import dagger.Module
@@ -76,7 +77,8 @@ object AppModule {
     @Singleton
     fun provideUseCases(repository: Repository): UseCases {
         return UseCases(
-            getAllWordsUseCase = GetAllWordsUseCase(repository)
+            getAllWordsUseCase = GetAllWordsUseCase(repository),
+            getRandomWordFromApi = GetRandomWordFromApi(repository)
         )
     }
 

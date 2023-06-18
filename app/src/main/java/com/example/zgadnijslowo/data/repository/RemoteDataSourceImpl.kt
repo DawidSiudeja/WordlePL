@@ -1,10 +1,13 @@
 package com.example.zgadnijslowo.data.repository
 
-import android.util.Log
+
 import com.example.zgadnijslowo.data.local.AppDatabase
 import com.example.zgadnijslowo.data.remote.WordsApi
+import com.example.zgadnijslowo.domain.model.Word
 import com.example.zgadnijslowo.domain.repository.RemoteDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 
 class RemoteDataSourceImpl(
@@ -25,4 +28,9 @@ class RemoteDataSourceImpl(
         wordsDao.insertWords(response)
 
     }
+
+    override suspend fun getRandomWordFromAPI(letters: String): Flow<Word> {
+        return wordsApi.getRandomWord(letters).words.asFlow()
+    }
+
 }

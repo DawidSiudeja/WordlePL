@@ -139,7 +139,8 @@ fun GameScreen(
                     }
                     //
                     entryWords.add(word)
-                    var result = viewModel.checkingEntryWord(word)
+                    var tries = entryWords.size
+                    var result = viewModel.checkingEntryWord(word, tries)
                     changingBoxColors(result = result, boxColor = boxColor)
                 }
             }
@@ -191,9 +192,9 @@ fun changingBoxColors(
     result: List<String>,
     boxColor: MutableList<Color>
 ) {
-    // result = [bad, bad, good, great, bad]
+    // Example result = [bad, bad, good, great, bad]
 
-    for((i, x) in result.withIndex()) {
+    for(x in result) {
         if(x == "bad") {
             boxColor.add(lightGreyGameColor)
         }
@@ -205,3 +206,6 @@ fun changingBoxColors(
         }
     }
 }
+
+
+
