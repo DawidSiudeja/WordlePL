@@ -1,15 +1,11 @@
 package com.example.zgadnijslowo.presentation.screens.game
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.zgadnijslowo.data.local.AppDatabase
-import com.example.zgadnijslowo.data.repository.Repository
-import com.example.zgadnijslowo.domain.model.Word
 import com.example.zgadnijslowo.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,9 +39,6 @@ class GameScreenViewModel @Inject constructor(
         tries: Int
     ): List<String> {
 
-
-        Log.d("RANDOM", "The random word is: $wordToGuess")
-
         val result = mutableListOf<String>()
         var correctChar = 0
 
@@ -77,15 +70,13 @@ class GameScreenViewModel @Inject constructor(
         Log.d("GAME", "Number of tries: $tries, and correct chars: $correctChar")
 
         if(tries == 6 && correctChar != 5) {
-            Log.d("GAME", "Loser")
             viewModelScope.launch {
                 addGameToLocalDb(win = false)
             }
-            result.add("lose")
+            result.add("lose$wordToGuess")
         }
 
         if(correctChar==5) {
-            Log.d("GAME", "Easy win")
             viewModelScope.launch {
                 addGameToLocalDb(win = true)
             }
@@ -97,11 +88,7 @@ class GameScreenViewModel @Inject constructor(
 
     private suspend fun addGameToLocalDb(win: Boolean) {
         if(win) {
-            Log.d("GAME", "Easy win2")
             appDatabase.userInfoDao().increaseWinsPlayed()
-        } else {
-            Log.d("GAME", "Loser2")
-            appDatabase.userInfoDao().increaseGamesPlayed()
         }
     }
 

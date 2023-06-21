@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -62,40 +61,6 @@ fun KeyboardWidget(
         onUndoClick = onUndoClick,
         onEnterClick = onEnterClick
     )
-/*
-    repeat(3) { rowIndex ->
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 5.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            repeat(10) { columnIndex ->
-                val letterIndex = rowIndex * 10 + columnIndex
-
-                KeyboardElement(
-                    letter = qwertyAlphabet[letterIndex],
-                    onLetterClick = onLetterClick,
-                )
-
-
-            }
-        }
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 5.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        SpecialKeyboardElement(
-            onUndoClick = onUndoClick,
-            onEnterClick = onEnterClick
-        )
-    }
-
- */
 }
 
 @Composable

@@ -30,6 +30,8 @@ val greenColor = Color(0XFF00BE13)
 val lightRed = Color(0XFFFF4F4F)
 val darkRed = Color(0XFFFF1F1F)
 
+val alertDialogBackgroundColorDark = Color(0xFF474747)
+
 val Colors.backgroundColor
     @Composable
     get() = if(isSystemInDarkTheme()) BackgroundDark else BackgroundLight
@@ -54,3 +56,7 @@ val Colors.buttonColor
 val Colors.loseWidget
     @Composable
     get() = if(isSystemInDarkTheme()) darkRed else lightRed
+
+val Colors.alertDialogBackgroundColor
+    @Composable
+    get() = if(isSystemInDarkTheme()) alertDialogBackgroundColorDark else BackgroundLight

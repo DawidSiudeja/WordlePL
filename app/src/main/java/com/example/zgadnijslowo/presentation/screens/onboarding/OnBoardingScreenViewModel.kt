@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.zgadnijslowo.data.local.AppDatabase
 import com.example.zgadnijslowo.domain.model.UserInfo
-import com.example.zgadnijslowo.domain.repository.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

@@ -1,8 +1,6 @@
 package com.example.zgadnijslowo.presentation.screens.game
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,22 +21,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.zgadnijslowo.navigation.Screen
 import com.example.zgadnijslowo.presentation.screens.components.ImageHeader
 import com.example.zgadnijslowo.ui.theme.BODY_PADDING
 import com.example.zgadnijslowo.ui.theme.backgroundColor
-import com.example.zgadnijslowo.ui.theme.buttonColor
 import com.example.zgadnijslowo.ui.theme.greenColor
 import com.example.zgadnijslowo.ui.theme.imageBackgroundOnBoarding
 import com.example.zgadnijslowo.ui.theme.lightGreyGameColor
-import com.example.zgadnijslowo.ui.theme.textColor
 import com.example.zgadnijslowo.ui.theme.yellowGameColor
-import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
@@ -49,13 +44,11 @@ fun GameScreen(
     var entryWords = remember { mutableStateListOf<String>() }
     var boxColor = remember { mutableStateListOf<Color>() }
     var showDialog = remember { mutableStateOf(false) }
-
+    var resultOfGame = remember { mutableStateOf("") }
+    var message = remember { mutableStateOf("Czy chcesz zagrać kolejną grę?") }
 
     var wordCount = 0
     var word: String
-
-
-
 
     Column(
         modifier = Modifier
@@ -147,18 +140,26 @@ fun GameScreen(
                     var result = viewModel.checkingEntryWord(word, tries)
                     changingBoxColors(result = result, boxColor = boxColor)
 
-                    if (result[result.size - 1] == "lose") {
+
+                    if (result[result.size - 1].contains("lose")) {
+                        resultOfGame.value = "Przegrana!"
+                        val wordToGuess =
+                            result[result.size -1].removePrefix("lose").capitalize()
+                        message.value =
+                            "Nieodgadnięte słowo to: " + wordToGuess + "\n" + message.value
                         showDialog.value = true
                     }
                     if (result[result.size - 1] == "win") {
+                        resultOfGame.value = "Wygrana!"
                         showDialog.value = true
                     }
-
                 }
             }
         )
 
     }
+
+
 
     EndGameDialog(
         showDialog = showDialog.value,
@@ -170,8 +171,8 @@ fun GameScreen(
             navController.popBackStack()
             navController.navigate(Screen.Game.route)
         },
-        title = "Koniec gry",
-        message = "Czy chcesz zagrać kolejną grę?",
+        title = resultOfGame.value,
+        message = message.value,
     )
 }
 
