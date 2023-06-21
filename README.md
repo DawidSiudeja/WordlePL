@@ -2,7 +2,7 @@
 
 English version 
 
-Application based on popular game Wordle.
+Application based on popular game Wordle.<br>
 In the app, I use external API, which is also available in my repositories as "WordlePLServer" (I'm using it to learn more about Retrofit and Ktor)
 The following technologies were also used: Dagger - Hilt, Room Database, Jetpack Compose.
 
