@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,6 +45,8 @@ fun GameScreen(
     var showDialog = remember { mutableStateOf(false) }
     var resultOfGame = remember { mutableStateOf("") }
     var message = remember { mutableStateOf("Czy chcesz zagrać kolejną grę?") }
+    val maxNumberOfTries = 6
+
 
     var wordCount = 0
     var word: String
@@ -60,7 +61,11 @@ fun GameScreen(
     ) {
         ImageHeader(navController)
 
-        MainGamePanelRow(letters = letters, boxColors = boxColor)
+        MainGamePanelRow(
+            letters = letters,
+            boxColors = boxColor,
+            numberOfTries = maxNumberOfTries
+        )
 
         KeyboardWidget(
             onLetterClick = { letter ->
@@ -137,7 +142,13 @@ fun GameScreen(
                     //
                     entryWords.add(word)
                     var tries = entryWords.size
-                    var result = viewModel.checkingEntryWord(word, tries)
+                    var result =
+                        viewModel.checkingEntryWord(
+                            wordToCheck = word,
+                            tries = tries,
+                            maxNumberOfTries = maxNumberOfTries,
+                            wordLength = 5
+                        )
                     changingBoxColors(result = result, boxColor = boxColor)
 
 
@@ -177,13 +188,17 @@ fun GameScreen(
 }
 
 @Composable
-fun MainGamePanelRow(letters: List<String>, boxColors: List<Color>) {
+fun MainGamePanelRow(
+    letters: List<String>,
+    boxColors: List<Color>,
+    numberOfTries: Int
+) {
     Column(
         modifier = Modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        repeat(6) { rowIndex ->
+        repeat(numberOfTries) { rowIndex ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

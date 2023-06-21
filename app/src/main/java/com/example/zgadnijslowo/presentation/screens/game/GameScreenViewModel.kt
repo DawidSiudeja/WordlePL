@@ -16,12 +16,9 @@ class GameScreenViewModel @Inject constructor(
     useCases: UseCases
 ):ViewModel() {
 
-
-
     private lateinit var wordToGuess: String
 
     init {
-
 
         viewModelScope.launch {
             wordToGuess =
@@ -36,7 +33,9 @@ class GameScreenViewModel @Inject constructor(
 
     fun checkingEntryWord(
         wordToCheck: String,
-        tries: Int
+        tries: Int,
+        maxNumberOfTries: Int,
+        wordLength: Int
     ): List<String> {
 
         val result = mutableListOf<String>()
@@ -69,14 +68,14 @@ class GameScreenViewModel @Inject constructor(
 
         Log.d("GAME", "Number of tries: $tries, and correct chars: $correctChar")
 
-        if(tries == 6 && correctChar != 5) {
+        if(tries == maxNumberOfTries && correctChar != wordLength) {
             viewModelScope.launch {
                 addGameToLocalDb(win = false)
             }
             result.add("lose$wordToGuess")
         }
 
-        if(correctChar==5) {
+        if(correctChar == wordLength) {
             viewModelScope.launch {
                 addGameToLocalDb(win = true)
             }

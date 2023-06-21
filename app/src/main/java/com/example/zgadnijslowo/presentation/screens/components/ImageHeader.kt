@@ -29,9 +29,9 @@ fun ImageHeader(
             modifier = Modifier
                 .clickable { navController.navigate(Screen.Home.route) },
             painter = (if(isSystemInDarkTheme()) {
-                painterResource(id = R.drawable.logo)
-            } else {
                 painterResource(id = R.drawable.logo_dark)
+            } else {
+                painterResource(id = R.drawable.logo)
             }),
             contentDescription = "Logo"
         )

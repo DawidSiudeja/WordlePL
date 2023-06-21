@@ -19,7 +19,7 @@ sealed class OnBoardingPage(
     )
 
     object Third: OnBoardingPage(
-        image = R.drawable.onboarding_thrid,
+        image = R.drawable.onboarding_third,
         description = "Zielony to nic innego, jak strzał w dziesiątkę – litera jest tam, gdzie trzeba."
     )
 
