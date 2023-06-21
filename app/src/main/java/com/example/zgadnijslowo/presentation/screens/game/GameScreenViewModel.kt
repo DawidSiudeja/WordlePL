@@ -25,11 +25,15 @@ class GameScreenViewModel @Inject constructor(
     private lateinit var wordToGuess: String
 
     init {
+
+
         viewModelScope.launch {
             wordToGuess =
                 useCases.getRandomWordFromApi(letters = "5").first().name
 
             Log.d("RANDOM", "The random word is: $wordToGuess")
+
+            appDatabase.userInfoDao().increaseGamesPlayed()
         }
     }
 
@@ -77,6 +81,7 @@ class GameScreenViewModel @Inject constructor(
             viewModelScope.launch {
                 addGameToLocalDb(win = false)
             }
+            result.add("lose")
         }
 
         if(correctChar==5) {
@@ -84,6 +89,7 @@ class GameScreenViewModel @Inject constructor(
             viewModelScope.launch {
                 addGameToLocalDb(win = true)
             }
+            result.add("win")
         }
 
         return result
@@ -92,7 +98,6 @@ class GameScreenViewModel @Inject constructor(
     private suspend fun addGameToLocalDb(win: Boolean) {
         if(win) {
             Log.d("GAME", "Easy win2")
-            appDatabase.userInfoDao().increaseGamesPlayed()
             appDatabase.userInfoDao().increaseWinsPlayed()
         } else {
             Log.d("GAME", "Loser2")

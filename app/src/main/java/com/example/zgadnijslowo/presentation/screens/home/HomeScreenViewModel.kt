@@ -30,7 +30,6 @@ class HomeScreenViewModel @Inject constructor(
         } catch (e: Exception) {
             Log.d("ERROR","Unknown error: ${e.message}")
         }
-
     }
 
     private val userInfoDao = appDatabase.userInfoDao()

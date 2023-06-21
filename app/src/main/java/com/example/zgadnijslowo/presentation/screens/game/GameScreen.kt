@@ -2,6 +2,7 @@ package com.example.zgadnijslowo.presentation.screens.game
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,20 +26,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.zgadnijslowo.navigation.Screen
 import com.example.zgadnijslowo.presentation.screens.components.ImageHeader
 import com.example.zgadnijslowo.ui.theme.BODY_PADDING
-import com.example.zgadnijslowo.ui.theme.BackgroundDark
-import com.example.zgadnijslowo.ui.theme.SecondaryColor
 import com.example.zgadnijslowo.ui.theme.backgroundColor
+import com.example.zgadnijslowo.ui.theme.buttonColor
 import com.example.zgadnijslowo.ui.theme.greenColor
 import com.example.zgadnijslowo.ui.theme.imageBackgroundOnBoarding
-import com.example.zgadnijslowo.ui.theme.lightBeige
 import com.example.zgadnijslowo.ui.theme.lightGreyGameColor
-import com.example.zgadnijslowo.ui.theme.lightRed
 import com.example.zgadnijslowo.ui.theme.textColor
 import com.example.zgadnijslowo.ui.theme.yellowGameColor
+import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
@@ -47,9 +47,13 @@ fun GameScreen(
 ) {
     val letters = remember { mutableStateListOf<String>() }
     var entryWords = remember { mutableStateListOf<String>() }
+    var boxColor = remember { mutableStateListOf<Color>() }
+    var showDialog = remember { mutableStateOf(false) }
+
+
     var wordCount = 0
     var word: String
-    var boxColor = remember { mutableStateListOf<Color>() }
+
 
 
 
@@ -73,7 +77,7 @@ fun GameScreen(
                 }
             },
             onUndoClick = {
-                // Pomyśleć nad uproszczeniem
+
                 if (letters.size > 0 && entryWords.size == 0) {
                     letters.removeAt(letters.size - 1)
                     wordCount--
@@ -106,7 +110,7 @@ fun GameScreen(
                 if (wordIsInListOfWords && wordCount == 5) {
                     wordCount = 0
                     word = ""
-                    // Tu też pomyśleć nad uproszczeniem XD
+
                     if(entryWords.size == 0) {
                         for (x in letters) {
                             word += x
@@ -142,11 +146,33 @@ fun GameScreen(
                     var tries = entryWords.size
                     var result = viewModel.checkingEntryWord(word, tries)
                     changingBoxColors(result = result, boxColor = boxColor)
+
+                    if (result[result.size - 1] == "lose") {
+                        showDialog.value = true
+                    }
+                    if (result[result.size - 1] == "win") {
+                        showDialog.value = true
+                    }
+
                 }
             }
         )
 
     }
+
+    EndGameDialog(
+        showDialog = showDialog.value,
+        onDismiss = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Home.route)
+        },
+        onConfirm = {
+            navController.popBackStack()
+            navController.navigate(Screen.Game.route)
+        },
+        title = "Koniec gry",
+        message = "Czy chcesz zagrać kolejną grę?",
+    )
 }
 
 @Composable
@@ -177,7 +203,7 @@ fun MainGamePanelRow(letters: List<String>, boxColors: List<Color>) {
                     ) {
                         Text(
                             text = letter.uppercase(),
-                            color = MaterialTheme.colors.textColor,
+                            color = Color.White,
                             fontSize = MaterialTheme.typography.h4.fontSize,
                             fontWeight = FontWeight.Bold
                         )
@@ -187,6 +213,7 @@ fun MainGamePanelRow(letters: List<String>, boxColors: List<Color>) {
         }
     }
 }
+
 
 fun changingBoxColors(
     result: List<String>,
